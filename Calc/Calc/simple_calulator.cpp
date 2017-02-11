@@ -32,9 +32,6 @@ double SimpleCalculator::operator()(double operand_lh, double operand_rh)
 	case '/':
 		calc_last_arg_ = operand_rh;
 		return calc_result_ = operand_lh / operand_rh;
-		//case '%': 
-		//calc_last_arg_ = operand_rh;
-		//return calc_result_ = operand_lh % operand_rh;
 	case '^':
 	{
 		calc_last_arg_ = operand_rh;
@@ -69,9 +66,6 @@ double SimpleCalculator::operator()(double operand_rh)
 	case '/':
 		calc_last_arg_ = operand_rh;
 		return calc_result_ /= operand_rh;
-		//case '%':
-		//calc_last_arg_ = operand_rh;
-		//return calc_result_ %= operand_rh;
 	case '^':
 	{
 		calc_last_arg_ = operand_rh;
@@ -110,9 +104,6 @@ double SimpleCalculator::undo()
 		calc_result_ *= calc_last_arg_;
 		calc_last_arg_ = 1 / calc_last_arg_;
 		return calc_result_;
-		//case '%':
-		//std::cout << "Operation's not allowed\n";
-		//return 0;
 	case '^':
 	{
 		double mult = calc_result_;
@@ -177,7 +168,7 @@ void SimpleCalculator::call_info()
 void call_calc()
 {
 	char operation;
-	int op1, op2;
+	double op1, op2;
 	std::string expression;
 	std::size_t found;
 	do {
@@ -189,16 +180,15 @@ void call_calc()
 		{
 			break;
 		}
-
 		if (isdigit(expression[0]))
 		{
 			if ((found = expression.find_first_of("+-*/^")) != std::string::npos)
 			{
 				operation = expression[found];
-				op1 = std::stoi(expression);
+				op1 = std::stod(expression);
 				if (isdigit(expression[found + 1]))
 				{
-					op2 = std::stoi(expression.substr(found + 1));
+					op2 = std::stod(expression.substr(found + 1));
 				}
 				else
 				{
@@ -217,7 +207,7 @@ void call_calc()
 			operation = expression[found];
 			if (isdigit(expression[found + 1]))
 			{
-				op2 = std::stoi(expression.substr(found + 1));
+				op2 = std::stod(expression.substr(found + 1));
 			}
 			else if (expression[found] == '=')
 			{

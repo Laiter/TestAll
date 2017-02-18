@@ -250,3 +250,8 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+EncryptionLaiter/EncryptionLaiter/output.txt
+EncryptionLaiter/EncryptionLaiter/input.txt
+EncryptionLaiter/EncryptionLaiter/decrypt.txt
+EncryptionLaiter/EncryptionLaiter/1.jpg
+EncryptionLaiter/EncryptionLaiter/input — копия.txt

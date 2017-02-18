@@ -1,5 +1,62 @@
 #include "laiter_encryption.h"
+namespace laiter {
 namespace crypt {
+
+	std::string Encrypt(std::ifstream& fin, std::ofstream& fout, const int loop)
+	{
+		srand(time(NULL));
+		std::string key;
+		fin.seekg(0, fin.end);
+		size_t length = fin.tellg();
+		fin.seekg(0, fin.beg);
+		std::vector<MimicIntCryptCell32> data(length);
+		fin.read(reinterpret_cast<char *>(&data[0]), length);
+		for (int i = 0; i < loop; i++)
+		{
+			int random_num = rand() % 1000;
+			if (rand() % 2 == 0)
+			{
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {SwSh(n.cell, random_num); });
+				key += 'S' + std::to_string(random_num);
+			}
+			else
+			{
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {XOR(n.num, random_num); });
+				key += 'X' + std::to_string(random_num);
+			}
+		}
+		fout.write(reinterpret_cast<char *>(&data[0]), length);
+		return key;
+	}
+
+	void Decrypt(std::ifstream& fin, std::ofstream& fout, std::string key)
+	{
+		fin.seekg(0, fin.end);
+		size_t length = fin.tellg();
+		fin.seekg(0, fin.beg);
+		std::vector<MimicIntCryptCell32> data(length);
+		fin.read(reinterpret_cast<char *>(&data[0]), length);
+		while (1)
+		{
+			size_t found = key.find_last_of("SX");
+			if (found == std::string::npos) break;
+			int random_num = std::stoi(key.substr(found + 1));
+			if (key.at(found) == 'S')
+			{
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {SwSh(n.cell, random_num, true); });
+				key.resize(found);
+			}
+			else
+			{
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {XOR(n.num, random_num); });
+				key.resize(found);
+			}
+		}
+		fout.write(reinterpret_cast<char *>(&data[0]), length);
+	}
+
+	//******************************************************************************************
+
 	std::string EncryptLaiter(std::ifstream& fin, std::ofstream& fout, const int loop) 
 	{
 		srand(time(NULL));
@@ -116,11 +173,16 @@ namespace crypt {
 			source.b13 = tmp.b12;
 		}
 	}
-	void XOR(CryptCell32& source, const int Rand) 
+	void XOR(uint32_t& source, const int Rand) 
+	{
+		source = source ^ Rand;
+	}
+	void XOR(CryptCell32& source, const int Rand)
 	{
 		static MimicIntCryptCell32 tmp;
 		tmp.cell = source;
 		tmp.num = tmp.num ^ Rand;
 		source = tmp.cell;
 	}
-};
+}; // namespace crypt
+}; // namespace laiter

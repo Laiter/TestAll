@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include <algorithm>
+
 namespace laiter {
 namespace crypt {
 	typedef struct
@@ -45,7 +46,9 @@ namespace crypt {
 	//Операции по сдвигу и перемешиванию битовых полей Source в зависимости от Rand. 
 	//decrypt отвечает за направление таких операций. 0 - по умолчанию для шифрования, 1 - для дешифровки. 
 	void SwSh(CryptCell32& source, const int Rand, const bool decrypt = 0);
+	void SwSh(CryptCell64& source, const int Rand, const bool decrypt = 0);
 	void XOR(uint32_t& source, const int Rand);
+	void XOR(uint64_t& source, const int Rand);
 	void XOR(CryptCell32& source, const int Rand);
 
 	std::string Encrypt(std::ifstream& fin, std::ofstream& fout, const int loop);

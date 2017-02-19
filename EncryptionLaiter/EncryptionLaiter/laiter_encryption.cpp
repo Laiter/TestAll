@@ -1,40 +1,53 @@
 #include "laiter_encryption.h"
+#include <iostream>
+#include <chrono>
 namespace laiter {
 namespace crypt {
 
 	std::string Encrypt(std::ifstream& fin, std::ofstream& fout, const int loop)
 	{
+		std::cout << "encrypt started!" << std::endl;																	// chrono
+		auto start_time = std::chrono::steady_clock::now();																// chrono
 		srand(time(NULL));
 		std::string key;
 		fin.seekg(0, fin.end);
 		size_t length = fin.tellg();
 		fin.seekg(0, fin.beg);
-		std::vector<MimicIntCryptCell32> data(length);
+		std::vector<MimicIntCryptCell64> data(length / 8 + 1);
 		fin.read(reinterpret_cast<char *>(&data[0]), length);
 		for (int i = 0; i < loop; i++)
 		{
 			int random_num = rand() % 1000;
 			if (rand() % 2 == 0)
 			{
-				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {SwSh(n.cell, random_num); });
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell64 &n) {SwSh(n.cell, random_num); });
 				key += 'S' + std::to_string(random_num);
 			}
 			else
 			{
-				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {XOR(n.num, random_num); });
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell64 &n) {XOR(n.num, random_num); });
 				key += 'X' + std::to_string(random_num);
 			}
+			auto end_time_loop = std::chrono::steady_clock::now();														// chrono
+			auto elapsed_loop = std::chrono::duration_cast<std::chrono::seconds>(end_time_loop - start_time);		    // chrono
+			std::cout << "loop " << i + 1 << " time:" << elapsed_loop.count() << " ns\n";								// chrono
 		}
 		fout.write(reinterpret_cast<char *>(&data[0]), length);
+		auto end_time = std::chrono::steady_clock::now();																// chrono
+		auto elapsed_ns = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);						// chrono
+		std::cout << "encrypt ended! time:" << elapsed_ns.count() << " ns\n";											// chrono
 		return key;
 	}
 
 	void Decrypt(std::ifstream& fin, std::ofstream& fout, std::string key)
 	{
+		int i = 1;
+		std::cout << "decrypt started!" << std::endl;																	// chrono
+		auto start_time = std::chrono::steady_clock::now();																// chrono
 		fin.seekg(0, fin.end);
 		size_t length = fin.tellg();
 		fin.seekg(0, fin.beg);
-		std::vector<MimicIntCryptCell32> data(length);
+		std::vector<MimicIntCryptCell64> data(length / 8 + 1);
 		fin.read(reinterpret_cast<char *>(&data[0]), length);
 		while (1)
 		{
@@ -43,16 +56,22 @@ namespace crypt {
 			int random_num = std::stoi(key.substr(found + 1));
 			if (key.at(found) == 'S')
 			{
-				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {SwSh(n.cell, random_num, true); });
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell64 &n) {SwSh(n.cell, random_num, true); });
 				key.resize(found);
 			}
 			else
 			{
-				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell32 &n) {XOR(n.num, random_num); });
+				std::for_each(data.begin(), data.end(), [random_num](MimicIntCryptCell64 &n) {XOR(n.num, random_num); });
 				key.resize(found);
 			}
+			auto end_time_loop = std::chrono::steady_clock::now();														// chrono
+			auto elapsed_loop = std::chrono::duration_cast<std::chrono::seconds>(end_time_loop - start_time);		    // chrono
+			std::cout << "loop " << i++ << " time:" << elapsed_loop.count() << " ns\n";									// chrono
 		}
 		fout.write(reinterpret_cast<char *>(&data[0]), length);
+		auto end_time = std::chrono::steady_clock::now();																// chrono
+		auto elapsed_ns = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);						// chrono
+		std::cout << "decrypt ended! time:" << elapsed_ns.count() << " ns\n";											// chrono
 	}
 
 	//******************************************************************************************
@@ -173,7 +192,46 @@ namespace crypt {
 			source.b13 = tmp.b12;
 		}
 	}
+	void SwSh(CryptCell64& source, const int Rand, const bool decrypt)
+	{
+		static CryptCell64 tmp = source;
+		if (Rand % 10 > 4)
+		{
+			if (decrypt == 1)
+			{
+				tmp.b13 = source.b13;
+				source.b13 = source.b12;
+				source.b12 = source.b11;
+				source.b11 = source.b10;
+				source.b10 = tmp.b13;
+			}
+			else
+			{
+				tmp.b10 = source.b10;
+				source.b10 = source.b11;
+				source.b11 = source.b12;
+				source.b12 = source.b13;
+				source.b13 = tmp.b10;
+			}
+			tmp.b20 = source.b20;
+			source.b20 = source.b21;
+			source.b21 = tmp.b20;
+		}
+		else
+		{
+			tmp.b10 = source.b10;
+			source.b10 = source.b11;
+			source.b11 = tmp.b10;
+			tmp.b12 = source.b12;
+			source.b12 = source.b13;
+			source.b13 = tmp.b12;
+		}
+	}
 	void XOR(uint32_t& source, const int Rand) 
+	{
+		source = source ^ Rand;
+	}
+	void XOR(uint64_t& source, const int Rand)
 	{
 		source = source ^ Rand;
 	}

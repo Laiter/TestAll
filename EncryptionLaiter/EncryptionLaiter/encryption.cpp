@@ -92,14 +92,17 @@ void Encryption::switch_shift(CryptCell64 & source, const size_t random, const b
 	}
 }
 
+void Encryption::xor(uint32_t & source, const size_t random)
 {
 	source = source ^ random;
 }
 
+void Encryption::xor(uint64_t & source, const size_t random)
 {
 	source = source ^ random;
 }
 
+void Encryption::xor(CryptCell32 & source, const size_t random)
 {
 	static MimicIntCryptCell32 tmp;
 	tmp.cell = source;
@@ -107,6 +110,7 @@ void Encryption::switch_shift(CryptCell64 & source, const size_t random, const b
 	source = tmp.cell;
 }
 
+void Encryption::xor(CryptCell64 & source, const size_t random)
 {
 	static MimicIntCryptCell64 tmp;
 	tmp.cell = source;

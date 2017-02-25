@@ -53,6 +53,10 @@ public:
 	void Decrypt();
 	void switch_shift(CryptCell32& source, const size_t random, const bool decrypt = 0);
 	void switch_shift(CryptCell64& source, const size_t random, const bool decrypt = 0);
+	void xor(uint32_t& source, const size_t random);
+	void xor(uint64_t& source, const size_t random);
+	void xor(CryptCell32& source, const size_t random);
+	void xor(CryptCell64& source, const size_t random);
 	void set_file_path(fs::path& file_path);
 	void set_file_path(fs::path&& file_path);
 	void set_file_size(size_t file_size);

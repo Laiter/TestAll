@@ -1,6 +1,8 @@
-#include "laiter_encryption.h"
+//old
+#include "laiter_encryption_test.h"
 #include <iostream>
 #include <chrono>
+#include <filesystem>
 namespace laiter {
 namespace crypt {
 
@@ -72,6 +74,88 @@ namespace crypt {
 		auto end_time = std::chrono::steady_clock::now();																// chrono
 		auto elapsed_ns = std::chrono::duration_cast<std::chrono::seconds>(end_time - start_time);						// chrono
 		std::cout << "decrypt ended! time:" << elapsed_ns.count() << " ns\n";											// chrono
+	}
+
+	void XOR(uint32_t& source, const int Rand)
+	{
+		source = source ^ Rand;
+	}
+
+	void XOR(uint64_t& source, const int Rand)
+	{
+		source = source ^ Rand;
+	}
+
+	void SwSh(CryptCell32& source, const int Rand, const bool decrypt)
+	{
+		static CryptCell32 tmp = source;
+		if (Rand % 10 > 4)
+		{
+			if (decrypt == 1)
+			{
+				tmp.b13 = source.b13;
+				source.b13 = source.b12;
+				source.b12 = source.b11;
+				source.b11 = source.b10;
+				source.b10 = tmp.b13;
+			}
+			else
+			{
+				tmp.b10 = source.b10;
+				source.b10 = source.b11;
+				source.b11 = source.b12;
+				source.b12 = source.b13;
+				source.b13 = tmp.b10;
+			}
+			tmp.b20 = source.b20;
+			source.b20 = source.b21;
+			source.b21 = tmp.b20;
+		}
+		else
+		{
+			tmp.b10 = source.b10;
+			source.b10 = source.b11;
+			source.b11 = tmp.b10;
+			tmp.b12 = source.b12;
+			source.b12 = source.b13;
+			source.b13 = tmp.b12;
+		}
+	}
+
+	void SwSh(CryptCell64& source, const int Rand, const bool decrypt)
+	{
+		static CryptCell64 tmp = source;
+		if (Rand % 10 > 4)
+		{
+			if (decrypt == 1)
+			{
+				tmp.b13 = source.b13;
+				source.b13 = source.b12;
+				source.b12 = source.b11;
+				source.b11 = source.b10;
+				source.b10 = tmp.b13;
+			}
+			else
+			{
+				tmp.b10 = source.b10;
+				source.b10 = source.b11;
+				source.b11 = source.b12;
+				source.b12 = source.b13;
+				source.b13 = tmp.b10;
+			}
+			tmp.b20 = source.b20;
+			source.b20 = source.b21;
+			source.b21 = tmp.b20;
+		}
+		else
+		{
+			tmp.b10 = source.b10;
+			source.b10 = source.b11;
+			source.b11 = tmp.b10;
+			tmp.b12 = source.b12;
+			source.b12 = source.b13;
+			source.b13 = tmp.b12;
+		}
 	}
 
 	//******************************************************************************************
@@ -157,84 +241,7 @@ namespace crypt {
 			fout << *it << " ";
 		}
 	}
-	void SwSh(CryptCell32& source, const int Rand, const bool decrypt) 
-	{
-		static CryptCell32 tmp = source;
-		if (Rand % 10 > 4) 
-		{
-			if (decrypt == 1) 
-			{
-				tmp.b13 = source.b13;
-				source.b13 = source.b12;
-				source.b12 = source.b11;
-				source.b11 = source.b10;
-				source.b10 = tmp.b13;
-			}
-			else 
-			{
-				tmp.b10 = source.b10;
-				source.b10 = source.b11;
-				source.b11 = source.b12;
-				source.b12 = source.b13;
-				source.b13 = tmp.b10;
-			}
-			tmp.b20 = source.b20;
-			source.b20 = source.b21;
-			source.b21 = tmp.b20;
-		}
-		else 
-		{
-			tmp.b10 = source.b10;
-			source.b10 = source.b11;
-			source.b11 = tmp.b10;
-			tmp.b12 = source.b12;
-			source.b12 = source.b13;
-			source.b13 = tmp.b12;
-		}
-	}
-	void SwSh(CryptCell64& source, const int Rand, const bool decrypt)
-	{
-		static CryptCell64 tmp = source;
-		if (Rand % 10 > 4)
-		{
-			if (decrypt == 1)
-			{
-				tmp.b13 = source.b13;
-				source.b13 = source.b12;
-				source.b12 = source.b11;
-				source.b11 = source.b10;
-				source.b10 = tmp.b13;
-			}
-			else
-			{
-				tmp.b10 = source.b10;
-				source.b10 = source.b11;
-				source.b11 = source.b12;
-				source.b12 = source.b13;
-				source.b13 = tmp.b10;
-			}
-			tmp.b20 = source.b20;
-			source.b20 = source.b21;
-			source.b21 = tmp.b20;
-		}
-		else
-		{
-			tmp.b10 = source.b10;
-			source.b10 = source.b11;
-			source.b11 = tmp.b10;
-			tmp.b12 = source.b12;
-			source.b12 = source.b13;
-			source.b13 = tmp.b12;
-		}
-	}
-	void XOR(uint32_t& source, const int Rand) 
-	{
-		source = source ^ Rand;
-	}
-	void XOR(uint64_t& source, const int Rand)
-	{
-		source = source ^ Rand;
-	}
+	
 	void XOR(CryptCell32& source, const int Rand)
 	{
 		static MimicIntCryptCell32 tmp;

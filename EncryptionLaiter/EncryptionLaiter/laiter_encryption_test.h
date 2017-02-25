@@ -1,5 +1,6 @@
-#ifndef LAITER_ENCRYPTION_H
-#define LAITER_ENCRYPTION_H
+//old
+#ifndef LAITER_ENCRYPTION_TEST_H
+#define LAITER_ENCRYPTION_TEST_H
 #include <string>
 #include <ctime>
 #include <fstream>
@@ -9,6 +10,9 @@
 
 namespace laiter {
 namespace crypt {
+
+
+
 	typedef struct
 	{
 		uint32_t b10 : 5;

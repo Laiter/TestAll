@@ -3,14 +3,15 @@
 
 namespace laiter {
 	
-Encryption::Encryption() : loop_(8) //TODO
+Encryption::Encryption() : loop_(8), file_size_(0), buffer_size_(0) //TODO: "."
 {
 	cpu_ = std::thread::hardware_concurrency();
 	threads_.resize(cpu_);
 }
 
-Encryption::Encryption(const fs::path file_path, const std::string key, size_t loop, size_t threads_num) : loop_(loop), file_path_(file_path), key_(key)
+Encryption::Encryption(const fs::path file_path, const std::string key, size_t loop, size_t buffer_size, size_t threads_num) : loop_(loop), key_(key), buffer_size_(buffer_size)
 {
+	file_path_ = file_path;
 	cpu_ = threads_num == 0 ? std::thread::hardware_concurrency() : threads_num;
 	threads_.resize(cpu_);
 }
@@ -20,35 +21,32 @@ Encryption::~Encryption()
 {
 }
 
+// Encryption methods
 std::string Encryption::encrypt()
 {
 	srand(time(NULL));
-
 	fin_.open(file_path_, std::ios::binary);
-	if (set_buffer() == -1)
+	if (set_buffer() == -1) //TODO: encapsulate run-up in ready()
 	{
 		return std::string("-1");
 	}
 	fout_.open(file_path_ += ".lcrypt", std::ios::binary);
 	cpu_ = buffer_size_ < cpu_ ? buffer_size_ : cpu_; // Check possibility of threading
-
 	size_t counter = 0;
 	while (fin_.good())
 	{
 		fin_.read(reinterpret_cast<char *>(&buffer_[0]), buffer_size_ * sizeof(size_t));
-
-		size_t random_num = 100 + rand() % 900; // TODO: generate key
-
 		for (int i = 0; i < loop_; i++) // TODO: function should support buffer size < file size
 		{
-			
+			size_t random_num = 100 + rand() % 900; // TODO: generate key
 			if (rand() % 2 == 0)
 			{
 				key_ += 'S' + std::to_string(random_num); 
 				for (size_t i = 0; i < cpu_; i++)
 				{
-					threads_[i] = std::thread(std::for_each(buffer_.begin() +((buffer_size_ / cpu_) * i), buffer_.end() - ((buffer_size_ / cpu_) * (cpu_ - 1 - i)), 
-						[=](MimicIntCryptCell64 &n) {switch_shift(n.cell, random_num); }));
+					threads_[i] = std::thread([=]() {thread_task_ss(i, random_num); });
+					/*threads_[i] = std::thread(std::for_each(buffer_.begin() +((buffer_size_ / cpu_) * i), buffer_.end() - ((buffer_size_ / cpu_) * (cpu_ - 1 - i)), 
+						[=](MimicIntCryptCell64 &n) {switch_shift(n.cell, random_num); }));*/
 				}
 				for (size_t i = 0; i < cpu_; i++)
 				{
@@ -60,8 +58,9 @@ std::string Encryption::encrypt()
 				key_ += 'X' + std::to_string(random_num);
 				for (size_t i = 0; i < cpu_; i++)
 				{
-					threads_[i] = std::thread(std::for_each(buffer_.begin() + ((buffer_size_ / cpu_) * i), buffer_.end() - ((buffer_size_ / cpu_) * (cpu_ - 1 - i)),
-						[=](MimicIntCryptCell64 &n) { xor (n.num, random_num); }));
+					threads_[i] = std::thread([=]() {thread_task_xor(i, random_num); });
+					/*threads_[i] = std::thread(std::for_each(buffer_.begin() + ((buffer_size_ / cpu_) * i), buffer_.end() - ((buffer_size_ / cpu_) * (cpu_ - 1 - i)),
+						[=](MimicIntCryptCell64 &n) { xor (n.num, random_num); }));*/
 				}
 				for (size_t i = 0; i < cpu_; i++)
 				{
@@ -77,11 +76,41 @@ std::string Encryption::encrypt()
 		fout_.write(reinterpret_cast<char *>(&buffer_[0]), buffer_size_ * sizeof(size_t));
 		counter++;
 	}
-
-	
-	
-
+	fin_.close();
+	fout_.close();
 	return std::string(key_);
+}
+
+void Encryption::decrypt() //
+{
+	fin_.open(file_path_, std::ios::binary);
+	if (set_buffer() == -1) //TODO: encapsulate run-up in ready()
+	{
+	}
+	fout_.open(file_path_ += ".txt", std::ios::binary);
+	cpu_ = buffer_size_ < cpu_ ? buffer_size_ : cpu_; // Check possibility of threading
+	size_t counter = 0;
+	fin_.read(reinterpret_cast<char *>(&buffer_[0]), buffer_size_ * sizeof(size_t));
+	while (1) // TODO: fix to work with threads and buffer < file size
+	{
+		size_t found = key_.find_last_of("SX");
+		if (found == std::string::npos) break;
+		int random_num = std::stoi(key_.substr(found + 1));
+		if (key_.at(found) == 'S')
+		{
+			std::for_each(buffer_.begin(), buffer_.end(), [=](MimicIntCryptCell64 &n) {switch_shift(n.cell, random_num, true); });
+			key_.resize(found);
+		}
+		else
+		{
+			std::for_each(buffer_.begin(), buffer_.end(), [=](MimicIntCryptCell64 &n) {xor(n.num, random_num); });
+			key_.resize(found);
+		}
+	}
+	fout_.write(reinterpret_cast<char *>(&buffer_[0]), buffer_size_ * sizeof(size_t));
+	counter++;
+	fin_.close();
+	fout_.close();
 }
 
 void Encryption::switch_shift(CryptCell32 & source, const size_t random, const bool decrypt)
@@ -182,6 +211,20 @@ void Encryption::xor(CryptCell64 & source, const size_t random)
 	source = tmp.cell;
 }
 
+// Thread call methods
+void Encryption::thread_task_ss(size_t i, size_t random_num)
+{
+	std::for_each(buffer_.begin() + ((buffer_size_ / cpu_) * i), buffer_.end() - ((buffer_size_ / cpu_) * (cpu_ - 1 - i)),
+		[=](MimicIntCryptCell64 &n) {switch_shift(n.cell, random_num); });
+}
+
+void Encryption::thread_task_xor(size_t i, size_t random_num)
+{
+	std::for_each(buffer_.begin() + ((buffer_size_ / cpu_) * i), buffer_.end() - ((buffer_size_ / cpu_) * (cpu_ - 1 - i)),
+		[=](MimicIntCryptCell64 &n) { xor (n.num, random_num); });
+}
+
+// Set methods
 void Encryption::set_file_path(fs::path & file_path)
 {
 	file_path_ = file_path;
@@ -300,6 +343,7 @@ void Encryption::set_real_cpu()
 	cpu_ = std::thread::hardware_concurrency();
 }
 
+// Get methods
 fs::path Encryption::get_file_path() const
 {
 	return fs::path(file_path_);

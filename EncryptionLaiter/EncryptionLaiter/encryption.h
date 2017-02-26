@@ -18,9 +18,8 @@ public:
 	// De\Constructors
 	Encryption();
 	Encryption(const fs::path file_path, const std::string key = "", 
-		size_t loop = 8, size_t threads_num = 0);
+		size_t loop = 8, size_t buffer_size = 0, size_t threads_num = 0);
 	~Encryption();
-
 	// Bitfields for int changing in union
 	typedef struct
 	{
@@ -60,6 +59,9 @@ public:
 	void xor(uint64_t& source, const size_t random);
 	void xor(CryptCell32& source, const size_t random);
 	void xor(CryptCell64& source, const size_t random);
+	// Thread call methods
+	void thread_task_ss(size_t i, size_t random_num);
+	void thread_task_xor(size_t i, size_t random_num);
 	// Set methods
 	void set_file_path(fs::path& file_path);
 	void set_file_path(fs::path&& file_path);
@@ -77,7 +79,7 @@ public:
 	void set_cpu();
 	void set_cpu(size_t cpu_num);
 	void set_real_cpu(); // the same as set_cpu()
-	//Get methods
+	// Get methods
 	fs::path get_file_path() const;
 	size_t get_file_size() const;
 	//void get_buffer();

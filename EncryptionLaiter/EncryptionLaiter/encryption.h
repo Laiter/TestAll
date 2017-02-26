@@ -15,8 +15,10 @@ namespace laiter {
 class Encryption
 {
 public:
+	// De\Constructors
 	Encryption();
-	Encryption(const fs::path file_path, const std::string key = "", size_t loop = 2, size_t threads_num = 0);
+	Encryption(const fs::path file_path, const std::string key = "", 
+		size_t loop = 8, size_t threads_num = 0);
 	~Encryption();
 
 	// Bitfields for int changing in union
@@ -49,18 +51,23 @@ public:
 		CryptCell64 cell;
 	}MimicIntCryptCell64;
 	// Methods
-	std::string Encrypt();
-	void Decrypt();
+	// Encryption methods
+	std::string encrypt();
+	void decrypt();
 	void switch_shift(CryptCell32& source, const size_t random, const bool decrypt = 0);
 	void switch_shift(CryptCell64& source, const size_t random, const bool decrypt = 0);
 	void xor(uint32_t& source, const size_t random);
 	void xor(uint64_t& source, const size_t random);
 	void xor(CryptCell32& source, const size_t random);
 	void xor(CryptCell64& source, const size_t random);
+	// Set methods
 	void set_file_path(fs::path& file_path);
 	void set_file_path(fs::path&& file_path);
+	int set_file_size(); // Set file_size of ifstream fin_, if failure return -1, if OK return 0
 	void set_file_size(size_t file_size);
-	void set_buffer();
+	int set_buffer_size();
+	void set_buffer_size(size_t buffer_size);
+	int set_buffer();
 	void set_loop(size_t loop);
 	void set_key(std::string& key);
 	void set_key(std::string&& key);
@@ -70,6 +77,16 @@ public:
 	void set_cpu();
 	void set_cpu(size_t cpu_num);
 	void set_real_cpu(); // the same as set_cpu()
+	//Get methods
+	fs::path get_file_path() const;
+	size_t get_file_size() const;
+	//void get_buffer();
+	size_t get_loop() const;
+	std::string get_key() const;
+	size_t get_threads() const;
+	//void get_real_threads();
+	size_t get_cpu() const;
+	size_t get_real_cpu() const; // call std::thread::hardware_concurrency()
 	// Utility
 	void open_file();
 private:
@@ -80,6 +97,7 @@ private:
 	size_t file_size_;
 	// File buffer
 	std::vector<MimicIntCryptCell64> buffer_;
+	size_t buffer_size_; // 1 buffer_size = sizeof(size_t) byte. x64 - 8 byte, x86 - 4 byte
 	// Number of encrypt operations for each cell
 	size_t loop_;
 	// Decryption key

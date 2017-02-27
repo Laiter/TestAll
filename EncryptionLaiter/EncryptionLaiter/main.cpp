@@ -7,17 +7,13 @@
 #include <thread>
 #include <filesystem>
 #include <fstream>
-//S193S736
+
 namespace fs = std::experimental::filesystem;
-fs::path a;
-void set_file_path(fs::path&& file_path)
-{
-	a = std::move(file_path);
-}
 
 void main()
 {
-	laiter::Encryption A("input.txt", "", 1);
+
+	laiter::Encryption A("input.txt", "", 8); // учеба.rar input.txt
 	std::string a = A.encrypt();
 	std::cout << a;
 	

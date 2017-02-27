@@ -60,17 +60,18 @@ public:
 	void xor(CryptCell32& source, const size_t random);
 	void xor(CryptCell64& source, const size_t random);
 	// Thread call methods
-	void thread_task_ss(size_t i, size_t random_num);
+	void thread_task_ss(size_t i, size_t random_num, bool decrypt = false);
 	void thread_task_xor(size_t i, size_t random_num);
 	// Set methods
 	void set_file_path(fs::path& file_path);
 	void set_file_path(fs::path&& file_path);
-	int set_file_size(); // Set file_size of ifstream fin_, if failure return -1, if OK return 0
+	bool set_file_size(); // Set file_size of ifstream fin_, if failure return -1, if OK return 0
 	void set_file_size(size_t file_size);
-	int set_buffer_size();
+	bool set_buffer_size();
 	void set_buffer_size(size_t buffer_size);
-	int set_buffer();
+	bool set_buffer();
 	void set_loop(size_t loop);
+	void set_key();
 	void set_key(std::string& key);
 	void set_key(std::string&& key);
 	void set_threads();
@@ -91,6 +92,8 @@ public:
 	size_t get_real_cpu() const; // call std::thread::hardware_concurrency()
 	// Utility
 	void open_file();
+	void clear_key();
+	bool get_ready(bool decrypt = false);
 private:
 	// Streams
 	std::ifstream fin_;

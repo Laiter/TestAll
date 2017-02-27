@@ -22,8 +22,8 @@ Encryption::~Encryption()
 }
 
 // Encryption methods
-std::string Encryption::encrypt() // TODO: there is some problem with high sized files with loop > 1(ex. 120 KB have bugs, 12KB not)
-{								  // check encryption methods. UPD: 1 thread don't have an issue.
+std::string Encryption::encrypt() 
+{								  
 	if (!get_ready())
 	{
 		return std::string("zero buffer");
@@ -131,7 +131,7 @@ void Encryption::decrypt()
 
 void Encryption::switch_shift(CryptCell32 & source, const size_t random, const bool decrypt)
 {
-	static CryptCell32 tmp = source;
+	CryptCell32 tmp = source;
 	if (random % 2 > 0)
 	{
 		if (decrypt)
@@ -167,7 +167,7 @@ void Encryption::switch_shift(CryptCell32 & source, const size_t random, const b
 
 void Encryption::switch_shift(CryptCell64 & source, const size_t random, const bool decrypt)
 {
-	static CryptCell64 tmp = source;
+	CryptCell64 tmp = source;
 	if (random % 2 > 0)
 	{
 		if (decrypt)
@@ -213,7 +213,7 @@ void Encryption::xor(uint64_t & source, const size_t random)
 
 void Encryption::xor(CryptCell32 & source, const size_t random)
 {
-	static MimicIntCryptCell32 tmp;
+	MimicIntCryptCell32 tmp;
 	tmp.cell = source;
 	tmp.num = tmp.num ^ random;
 	source = tmp.cell;
@@ -221,7 +221,7 @@ void Encryption::xor(CryptCell32 & source, const size_t random)
 
 void Encryption::xor(CryptCell64 & source, const size_t random)
 {
-	static MimicIntCryptCell64 tmp;
+	MimicIntCryptCell64 tmp;
 	tmp.cell = source;
 	tmp.num = tmp.num ^ random;
 	source = tmp.cell;

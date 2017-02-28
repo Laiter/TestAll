@@ -1,4 +1,4 @@
-//brunch: Encryption
+//branch: Encryption
 //author: @Vladislav Sarychev
 //version: 1.0 28.02.17
 //******************************************************************************************
@@ -17,7 +17,7 @@
 // TODO: port code to Android
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-This brunch contain class Encryption that can enrypt\decrypt any file with encryption key.
+This branch contain class Encryption that can enrypt\decrypt any file with encryption key.
 
 To use it you can simply use code in main.cpp that call console UI. 
 Or it can be used manually with methods described in encryption.h

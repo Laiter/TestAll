@@ -7,14 +7,10 @@ namespace lcrypt = ::laiter::crypt;
 
 void test1()
 {
-	std::wcout << L"Привет";
-	//lcrypt::CryptCell64 a;
-	//lcrypt::CryptCell32 b;
-	//std::cout << sizeof(a) << ' ' << sizeof(b) << std::endl;
 	std::cout << "test decrypt\\encrypt. \nfile.rar size: 2,27 Gb (2 444 715 303 byte) \nbuffer size: all file \nuse MimicIntCryptCell32 \nhard drive type: HDD \nx64 build\n";
 	auto start_time = std::chrono::steady_clock::now();													// chrono
 	std::string filepath("D:\\GitProjects\\TestAll\\EncryptionLaiter\\EncryptionLaiter\\input.txt");
-	std::ifstream fin(filepath.c_str(), std::fstream::binary);											// учеба.rar // input.txt
+	std::ifstream fin(filepath.c_str(), std::fstream::binary);											
 	std::ofstream fout("output.txt", std::fstream::binary);
 	std::string key = lcrypt::Encrypt(fin, fout, 1);
 	std::cout << key << std::endl;

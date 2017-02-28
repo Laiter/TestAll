@@ -1,24 +1,22 @@
+//******************************************************************************************
+// v1.0: Encrypter/Decrypter
+// 1. write a class Encryption that should read\write and encrypt\decrypt any file. 
+// 2. have to be optimized for x64
+// 3. have to support multithreading and single thread
+// 4. main methods should support auto and manual mode
+// 5. have to work with huge files
+// 6. have to support differend buffer size of file 
+// 7. write console program that use class Encryption
+// 8. console UI should be user frieldly
+// for the future releases:
+// TODO: develop better key algorithms
+// TODO: develop GUI
 #include "encryption.h"
-#include "laiter_encryption_test.h"
-#include <iostream>
-#include <string>
-#include <chrono>
-#include <fstream>
-#include <thread>
-#include <filesystem>
-#include <fstream>
-
-namespace fs = std::experimental::filesystem;
 
 void main()
 {
-
-	laiter::Encryption A("input.txt", "", 8); // учеба.rar input.txt
-	std::string a = A.encrypt();
-	std::cout << a;
-	
-	A.set_file_path("input.txt.lcrypt");
-	A.decrypt();
-	
-	system("pause");  
+	//Enter test.txt in console to use test file
+	laiter::Encryption L;
+	L.open_file();
+	L.call_menu();
 }

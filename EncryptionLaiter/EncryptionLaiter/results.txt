@@ -1,62 +1,123 @@
-//bad test
-test decrypt\encrypt. //************!!!!!wrong vector alloc(length instead of length / 4 + 1)
+test #1
+test decrypt\encrypt.
 file.rar size: 2,27 Gb (2 444 715 303 byte)
-buffer size: all file
-use MimicIntCryptCell32
-hard drive type: HDD
-x64 build
-encrypt started!
-loop 1 time:367 ns
-loop 2 time:454 ns
-loop 3 time:566 ns
-loop 4 time:684 ns
-loop 5 time:797 ns
-loop 6 time:917 ns
-loop 7 time:1003 ns
-loop 8 time:1090 ns
-encrypt ended! time:1096 ns
-decrypt started!
-loop 1 time:329 ns
-loop 2 time:416 ns
-loop 3 time:535 ns
-loop 4 time:647 ns
-loop 5 time:768 ns
-loop 6 time:880 ns
-loop 7 time:967 ns
-loop 8 time:1054 ns
-decrypt ended! time:1059 ns
-overall time: 2159 ns 8 loops
-Для продолжения нажмите любую клавишу . . .
-//bad test
-test decrypt\encrypt. //************!!!!!wrong vector alloc(length instead of length / 8 + 1)
-file.rar size: 2,27 Gb (2 444 715 303 byte)
-buffer size: all file
+buffer size: 1024 MB
 use MimicIntCryptCell64
 hard drive type: HDD
 x64 build
 encrypt started!
-loop 1 time:369 ns
-loop 2 time:457 ns
-loop 3 time:569 ns
-loop 4 time:682 ns
-loop 5 time:771 ns
-loop 6 time:859 ns
-loop 7 time:947 ns
-loop 8 time:1060 ns
-encrypt ended! time:1083 ns
+encrypt ended! time:48 s
 decrypt started!
-loop 1 time:359 ns
-loop 2 time:447 ns
-loop 3 time:535 ns
-loop 4 time:624 ns
-loop 5 time:737 ns
-loop 6 time:850 ns
-loop 7 time:938 ns
-loop 8 time:1058 ns
-decrypt ended! time:1079 ns
-overall time: 2167 ns 8 loops
-Для продолжения нажмите любую клавишу . . .
+decrypt ended! time:35 s
+overall time: 83 s 8 loops
+---------------------------------------------------------------------
+test #2
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 512 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:36 s
+decrypt started!
+decrypt ended! time:30 s
+overall time: 66 s 8 loops
+---------------------------------------------------------------------
+test #3
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 256 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:31 s
+decrypt started!
+decrypt ended! time:27 s
+overall time: 58 s 8 loops
+---------------------------------------------------------------------
+test #4
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 128 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:29 s
+decrypt started!
+decrypt ended! time:27 s
+overall time: 56 s 8 loops
+---------------------------------------------------------------------
+test #5
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 64 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:30 s
+decrypt started!
+decrypt ended! time:30 s
+overall time: 60 s 8 loops
+---------------------------------------------------------------------
+test #6
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 32 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:30 s
+decrypt started!
+decrypt ended! time:30 s
+overall time: 60 s 8 loops
+---------------------------------------------------------------------
+test #7
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 16 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:30 s
+decrypt started!
+decrypt ended! time:31 s
+overall time: 61 s 8 loops
+---------------------------------------------------------------------
+test #8
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 8 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:34 s
+decrypt started!
+decrypt ended! time:34 s
+overall time: 68 s 8 loops
+---------------------------------------------------------------------
+test #9
+test decrypt\encrypt.
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: 4 MB
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+encrypt ended! time:32 s
+decrypt started!
+decrypt ended! time:33 s
+overall time: 65 s 8 loops
+---------------------------------------------------------------------
 
+
+//*****************OLD*****************************//
 test decrypt\encrypt.
 file.rar size: 2,27 Gb (2 444 715 303 byte)
 buffer size: all file
@@ -64,27 +125,27 @@ use MimicIntCryptCell64
 hard drive type: HDD
 x64 build
 encrypt started!
-loop 1 time:42 ns
-loop 2 time:53 ns
-loop 3 time:64 ns
-loop 4 time:79 ns
-loop 5 time:94 ns
-loop 6 time:105 ns
-loop 7 time:116 ns
-loop 8 time:131 ns
-encrypt ended! time:134 ns
+loop 1 time:42 s
+loop 2 time:53 s
+loop 3 time:64 s
+loop 4 time:79 s
+loop 5 time:94 s
+loop 6 time:105 s
+loop 7 time:116 s
+loop 8 time:131 s
+encrypt ended! time:134 s
 decrypt started!
-loop 1 time:47 ns
-loop 2 time:58 ns
-loop 3 time:69 ns
-loop 4 time:84 ns
-loop 5 time:99 ns
-loop 6 time:110 ns
-loop 7 time:121 ns
-loop 8 time:132 ns
-decrypt ended! time:134 ns
-overall time: 269 ns 8 loops
-Для продолжения нажмите любую клавишу . . .
+loop 1 time:47 s
+loop 2 time:58 s
+loop 3 time:69 s
+loop 4 time:84 s
+loop 5 time:99 s
+loop 6 time:110 s
+loop 7 time:121 s
+loop 8 time:132 s
+decrypt ended! time:134 s
+overall time: 269 s 8 loops
+---------------------------------------------------------------------
 
 test decrypt\encrypt.
 file.rar size: 2,27 Gb (2 444 715 303 byte)
@@ -93,27 +154,27 @@ use MimicIntCryptCell32
 hard drive type: HDD
 x64 build
 encrypt started!
-loop 1 time:89 ns
-loop 2 time:117 ns
-loop 3 time:139 ns
-loop 4 time:160 ns
-loop 5 time:190 ns
-loop 6 time:212 ns
-loop 7 time:234 ns
-loop 8 time:255 ns
-encrypt ended! time:258 ns
+loop 1 time:89 s
+loop 2 time:117 s
+loop 3 time:139 s
+loop 4 time:160 s
+loop 5 time:190 s
+loop 6 time:212 s
+loop 7 time:234 s
+loop 8 time:255 s
+encrypt ended! time:258 s
 decrypt started!
-loop 1 time:83 ns
-loop 2 time:105 ns
-loop 3 time:127 ns
-loop 4 time:157 ns
-loop 5 time:179 ns
-loop 6 time:201 ns
-loop 7 time:229 ns
-loop 8 time:257 ns
-decrypt ended! time:259 ns
-overall time: 518 ns 8 loops
-Для продолжения нажмите любую клавишу . . .
+loop 1 time:83 s
+loop 2 time:105 s
+loop 3 time:127 s
+loop 4 time:157 s
+loop 5 time:179 s
+loop 6 time:201 s
+loop 7 time:229 s
+loop 8 time:257 s
+decrypt ended! time:259 s
+overall time: 518 s 8 loops
+---------------------------------------------------------------------
 
 test decrypt\encrypt.
 file.rar size: 2,27 Gb (2 444 715 303 byte)
@@ -122,24 +183,83 @@ use MimicIntCryptCell128
 hard drive type: HDD
 x64 build
 encrypt started!
-loop 1 time:22 ns
-loop 2 time:29 ns
-loop 3 time:34 ns
-loop 4 time:40 ns
-loop 5 time:45 ns
-loop 6 time:52 ns
-loop 7 time:58 ns
-loop 8 time:63 ns
-encrypt ended! time:66 ns
+loop 1 time:22 s
+loop 2 time:29 s
+loop 3 time:34 s
+loop 4 time:40 s
+loop 5 time:45 s
+loop 6 time:52 s
+loop 7 time:58 s
+loop 8 time:63 s
+encrypt ended! time:66 s
 decrypt started!
-loop 1 time:22 ns
-loop 2 time:27 ns
-loop 3 time:34 ns
-loop 4 time:40 ns
-loop 5 time:45 ns
-loop 6 time:51 ns
-loop 7 time:58 ns
-loop 8 time:64 ns
-decrypt ended! time:66 ns
-overall time: 134 ns 8 loops
-Для продолжения нажмите любую клавишу . . .
+loop 1 time:22 s
+loop 2 time:27 s
+loop 3 time:34 s
+loop 4 time:40 s
+loop 5 time:45 s
+loop 6 time:51 s
+loop 7 time:58 s
+loop 8 time:64 s
+decrypt ended! time:66 s
+overall time: 134 s 8 loops
+---------------------------------------------------------------------
+
+//**********************bad test***********************//
+test decrypt\encrypt. //************!!!!!wrong vector alloc(length instead of length / 4 + 1)
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: all file
+use MimicIntCryptCell32
+hard drive type: HDD
+x64 build
+encrypt started!
+loop 1 time:367 s
+loop 2 time:454 s
+loop 3 time:566 s
+loop 4 time:684 s
+loop 5 time:797 s
+loop 6 time:917 s
+loop 7 time:1003 s
+loop 8 time:1090 s
+encrypt ended! time:1096 s
+decrypt started!
+loop 1 time:329 s
+loop 2 time:416 s
+loop 3 time:535 s
+loop 4 time:647 s
+loop 5 time:768 s
+loop 6 time:880 s
+loop 7 time:967 s
+loop 8 time:1054 s
+decrypt ended! time:1059 s
+overall time: 2159 s 8 loops
+---------------------------------------------------------------------
+//bad test
+test decrypt\encrypt. //************!!!!!wrong vector alloc(length instead of length / 8 + 1)
+file.rar size: 2,27 Gb (2 444 715 303 byte)
+buffer size: all file
+use MimicIntCryptCell64
+hard drive type: HDD
+x64 build
+encrypt started!
+loop 1 time:369 s
+loop 2 time:457 s
+loop 3 time:569 s
+loop 4 time:682 s
+loop 5 time:771 s
+loop 6 time:859 s
+loop 7 time:947 s
+loop 8 time:1060 s
+encrypt ended! time:1083 s
+decrypt started!
+loop 1 time:359 s
+loop 2 time:447 s
+loop 3 time:535 s
+loop 4 time:624 s
+loop 5 time:737 s
+loop 6 time:850 s
+loop 7 time:938 s
+loop 8 time:1058 s
+decrypt ended! time:1079 s
+overall time: 2167 s 8 loops
+---------------------------------------------------------------------

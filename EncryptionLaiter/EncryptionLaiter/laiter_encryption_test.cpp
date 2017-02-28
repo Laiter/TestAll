@@ -1,11 +1,15 @@
 //old
+//DEPRECATED
+//******************************************************************************************
+// Task2: Encrypter/Decrypter
+// 1. write Encrypter that should read and encrypt any file. 
+// 2. write Decrypter =/=
 #include "laiter_encryption_test.h"
 #include <iostream>
 #include <chrono>
 #include <filesystem>
 namespace laiter {
 namespace crypt {
-
 	std::string Encrypt(std::ifstream& fin, std::ofstream& fout, const int loop)
 	{
 		std::cout << "encrypt started!" << std::endl;																	// chrono
@@ -159,7 +163,9 @@ namespace crypt {
 	}
 
 	//******************************************************************************************
-
+	// Task1: Encrypter/Decrypter
+	// 1. write Encrypter that should read and encrypt integers from file. 
+	// 2. write Decrypter =/=
 	std::string EncryptLaiter(std::ifstream& fin, std::ofstream& fout, const int loop) 
 	{
 		srand(time(NULL));

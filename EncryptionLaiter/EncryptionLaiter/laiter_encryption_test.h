@@ -1,4 +1,13 @@
 //old
+//DEPRECATED
+//******************************************************************************************
+// v2: Encrypter/Decrypter
+// 1. write Encrypter that should read and encrypt any file. 
+// 2. write Decrypter =/=
+//******************************************************************************************
+// v1: Encrypter/Decrypter
+// 1. write Encrypter that should read and encrypt integers from file. 
+// 2. write Decrypter =/=
 #ifndef LAITER_ENCRYPTION_TEST_H
 #define LAITER_ENCRYPTION_TEST_H
 #include <string>
@@ -10,9 +19,6 @@
 
 namespace laiter {
 namespace crypt {
-
-
-
 	typedef struct
 	{
 		uint32_t b10 : 5;
@@ -57,8 +63,6 @@ namespace crypt {
 
 	std::string Encrypt(std::ifstream& fin, std::ofstream& fout, const int loop);
 	void Decrypt(std::ifstream& fin, std::ofstream& fout, std::string key);
-
-
 }; // namespace crypt
 }; // namespace laiter
 #endif // !LAITER_ENCRYPTION_H

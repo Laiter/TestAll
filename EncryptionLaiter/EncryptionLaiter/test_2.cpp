@@ -3,15 +3,15 @@
 #include <chrono>
 #include <iostream>
 
-void XOR16(uint16_t& source, uint16_t random) //переделать под мимика
+void XOR16(uint16_t& source, uint16_t random)
 {
 	source = source ^ random;
 }
-void XOR32(uint32_t& source, uint32_t random) //переделать под мимика
+void XOR32(uint32_t& source, uint32_t random)
 {
 	source = source ^ random;
 }
-void XOR64(uint64_t& source, uint64_t random) //переделать под мимика
+void XOR64(uint64_t& source, uint64_t random)
 {
 	source = source ^ random;
 }

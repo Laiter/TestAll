@@ -8,10 +8,25 @@
 #include <cstdlib>
 #include <iostream>
 #include <filesystem>
-
+#include <limits>
 namespace fs = std::experimental::filesystem;
-
 namespace laiter {
+// Encrypt and Decrypt file
+// Example:
+//	//Ex1: use console UI
+//	laiter::Encryption L;
+//	L.open_file();
+//	L.call_menu();
+//	//Ex2: Parametric constructor, custom settings
+//	laiter::Encryption L1("C:\\Project10\\file_path.txt", "", 2, 128000000, 8);
+//	L2.set_key("X932S324");
+//	std::string key = L1.encrypt();
+//	L1.decrypt();
+//	//Ex3: Default constructor, default settings
+//	laiter::Encryption L2;
+//	L2.set_file_path("file_path.lecrypt");
+//	std::string key = L2.encrypt();
+//	L2.decrypt();
 class Encryption
 {
 public:
@@ -19,7 +34,10 @@ public:
 	Encryption();
 	Encryption(const fs::path file_path, const std::string key = "", 
 		size_t loop = 8, size_t buffer_size = 0, size_t threads_num = 0);
+	Encryption(const Encryption& copy) = delete;
 	~Encryption();
+	//Operators
+	Encryption& operator=(const Encryption& copy) = delete;
 	// Bitfields for int changing in union
 	typedef struct
 	{
@@ -59,40 +77,45 @@ public:
 	void xor(uint64_t& source, const size_t random);
 	void xor(CryptCell32& source, const size_t random);
 	void xor(CryptCell64& source, const size_t random);
-	// Thread call methods
+	// Thread call methods (divide buffer for each thread)
 	void thread_task_ss(size_t i, size_t random_num, bool decrypt = false);
 	void thread_task_xor(size_t i, size_t random_num);
 	// Set methods
 	void set_file_path(fs::path& file_path);
 	void set_file_path(fs::path&& file_path);
-	bool set_file_size(); // Set file_size of ifstream fin_, if failure return -1, if OK return 0
+	bool set_file_size();							// Set file size of ifstream fin_, if failure return false
 	void set_file_size(size_t file_size);
-	bool set_buffer_size();
+	bool set_buffer_size();							// call set_file_size() if not set
 	void set_buffer_size(size_t buffer_size);
-	bool set_buffer();
-	void set_loop(size_t loop);
-	void set_key();
+	bool set_buffer();								// call set_buffer_size() and set_file_size() if not set
+	void set_loop(size_t loop = 8);
+	void set_key();									// create random key_ if key_ is empty
 	void set_key(std::string& key);
 	void set_key(std::string&& key);
-	void set_threads();
-	void set_threads(size_t threads_num);
-	void set_real_threads();
+	void set_threads();								// call set_real_cpu() if cpu_ = 0
+	void set_threads(size_t threads_num);			// call set_real_cpu() if cpu_ = 0
+	void set_real_threads();						// call set_real_cpu() before set threads
 	void set_cpu();
-	void set_cpu(size_t cpu_num);
-	void set_real_cpu(); // the same as set_cpu()
+	void set_cpu(size_t threads_num);
+	void set_real_cpu();							// the same as set_cpu()
 	// Get methods
 	fs::path get_file_path() const;
 	size_t get_file_size() const;
-	//void get_buffer();
+	size_t get_buffer_size() const;
 	size_t get_loop() const;
 	std::string get_key() const;
 	size_t get_threads() const;
 	//void get_real_threads();
 	size_t get_cpu() const;
-	size_t get_real_cpu() const; // call std::thread::hardware_concurrency()
+	size_t get_real_cpu() const;					// call std::thread::hardware_concurrency()
 	// Utility
 	void open_file();
 	void clear_key();
+	void change_key();
+	void change_loop();
+	void change_buffer();
+	void change_settings();
+	void call_menu();								// console UI
 	bool get_ready(bool decrypt = false);
 private:
 	// Streams
@@ -102,8 +125,9 @@ private:
 	size_t file_size_;
 	// File buffer
 	std::vector<MimicIntCryptCell64> buffer_;
-	size_t buffer_size_; // 1 buffer_size = sizeof(size_t) byte. x64 - 8 byte, x86 - 4 byte
+	size_t buffer_size_;							// 1 buffer_size = sizeof(size_t) byte. x64 - 8 byte, x86 - 4 byte
 	// Number of encrypt operations for each cell
+	// use to generate key
 	size_t loop_;
 	// Decryption key
 	std::string key_;

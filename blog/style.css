@@ -1,0 +1,447 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f7f7f7;
+    font-family: 'Roboto', sans-serif;
+}
+
+#header, #content {
+	display: block;
+}
+
+
+#header {
+    border: 1px solid #b5b7ba;
+    background-color: #dfdfdf;
+    width: 100%;
+    height: 110px;
+    text-align: center;
+    
+}
+
+#header .logo {
+	width: 25%;
+	height: 110px;
+	float: left;
+	background: url(images/logo.png) no-repeat;
+	cursor: pointer;
+	background-size: contain;
+}
+
+#header .menu {
+	width: 75%;
+	height: 110px;
+	float:left;
+	
+}
+
+#header .menu a {
+	display: block;
+	float: left;
+	width: 24%;
+	height: 40px;
+	border-right: 1px solid #b5b7ba;
+	text-align: center;
+	font-size: 180%;
+	padding: 35px 0;
+}
+
+#header .menu a:last-child{ 
+	border:none;
+}
+
+#header #selected {
+    color: #000;
+}
+
+
+#header a {
+    color: #4d4d4d;
+    font-size: 20px;
+    font-weight: 100;
+    text-align: left;
+    text-decoration: none;
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+}
+
+#header span {
+    padding: 0 38px;
+}
+
+#content {
+    height: 806px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#content h1 {
+    width: 100%;
+    text-align: center;
+    color: #5f7095;
+    font-size: 200%;
+    font-weight: 500;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#content h2 {
+    width: 100%;
+    text-align: center;
+    color: #E5E5E5;
+    font-size: 300%;
+    font-weight: 600;
+    margin-top: 10px;
+    margin-bottom: 20px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	background-color: #000;
+}
+
+#content h3 {
+    font-size: 35px;
+    font-weight: 300;
+    text-align: left;
+	color: #6c6c74;
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    word-spacing: 0.17em;
+	margin-top: 30px;
+}
+
+#content h5 {
+    color:  #242424;
+    font-size: 24px;
+    text-align: left;
+}
+
+#content img {
+	display: block;
+	height: auto;
+	float: left;
+	width: 100%;
+	margin: 0;
+}
+
+#cards {
+	display: block;
+    width: 100%;
+	height: 680px;
+    margin: 0;
+	background: #32323b;
+	overflow: hidden;
+	position: relative;
+}
+
+.fix-card-p {
+	display: block;
+	height: 680px;
+	float: left;
+	width: 640px;
+	margin: 0;
+	position: relative;
+	z-index: 10;
+	background: #2c2c34;
+}
+
+.fix-card-c {
+	display: block;
+	height: 600px;
+	float: left;
+	width: 580px;
+	margin: 0;
+	padding: 40px 30px;
+	overflow: hidden;
+	background-color: #212127;
+}
+
+.fix-card-c img{
+	display: block;
+	height: 600px;
+	float: left;
+	width: 580px;
+	margin: 0;
+}
+
+.fix-card-c a.card-title{
+	display: block;
+	width: 540px;
+	margin: 0 0 40px 0;
+	padding: 20px 20px;
+	position: absolute;
+	bottom: 0px;
+	background: #000000;
+	text-decoration: none;
+	color: #d9d9d9;
+	text-align: left;
+	font-size: 180%;
+}
+
+#miniScroller {
+	display: block;
+	height: 600px;
+	float: left;
+	bottom: 0;
+    left: 0;
+    padding: 40px 30px 40px 642px;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#miniScroller div.scrollableArea .main-card-c {
+    display: block;
+	float: left;
+    width: 280px;
+    height:606px;
+	margin: 0 10px 0 30px;
+}
+
+.main-card-c-1 {
+	display: block;
+	height: 290px;
+	float: left;
+	width: 280px;
+	margin: 0 0 20px 0;
+}
+
+.main-card-c-2 {
+	display: block;
+	height: 290px;
+	float: left;
+	width: 280px;
+	margin: 0 0 6px 0;
+}
+
+.main-card-c img{
+	display: block;
+	height: 290px;
+	float: left;
+	width: 280px;
+	margin: 0;
+}
+
+.main-card-c-1 a.card-title{
+	display: block;
+	width: 270px;
+	margin: 0 0 310px 0;
+	padding: 5px 5px;
+	position: absolute;
+	bottom: 0px;
+	background: #000000;
+	text-decoration: none;
+	color: #d9d9d9;
+	text-align: left;
+	font-size: 150%;
+	white-space: normal;
+}
+
+.main-card-c-2 a.card-title{
+	display: block;
+	width: 270px;
+	margin: 0;
+	padding: 5px 5px;
+	position: absolute;
+	bottom: 0px;
+	background: #000000;
+	text-decoration: none;
+	color: #d9d9d9;
+	text-align: left;
+	font-size: 150%;
+	white-space: normal;
+
+}
+
+#news {
+	width: 50%;
+	margin: 0 25%;
+	padding: 0;
+}
+
+.news-info a{
+	text-decoration: none;
+	color: #5f7095;
+}
+
+.news-info p{
+	font-size: 150%;
+}
+
+.news-list {
+	margin: 0;
+	padding: 0;
+}
+
+.news-list li {
+	list-style-type: none;
+}
+
+hr {
+	margin: 10px 0 25px 0;
+}
+
+#footer {
+    background-color: #434445;
+    min-width: 1920px;
+    height: 140px;
+    margin: 0 auto;
+    text-align: center;
+    color: #a4a4a4;
+    font-size: 20px;
+    font-weight: 100;
+    line-height: 140px;
+}
+
+#footer a {
+    color: inherit;
+}
+
+@media screen and (min-width:300px) and (max-width:480px) {
+	#news {
+		width: 80%;
+		margin: 0 10%;
+		padding: 0;
+	}
+	.news-info p{
+		font-size: 210%;
+	}
+	
+	#cards {
+		height: 544px;
+	}
+
+	.fix-card-p {
+		height: 544px;
+		width: 512px;
+	}
+
+	.fix-card-c {
+		height: 480px;
+		width: 464px;
+		padding: 32px 24px;
+	}
+
+
+	.fix-card-c a.card-title{
+		width: 432px;
+		margin: 0 0 32px 0;
+		padding: 16px 16px;
+		font-size: 210%;
+	}
+
+	#miniScroller {
+		height: 480px;
+		padding: 32px 24px 32px 514px;
+	}
+
+	#miniScroller div.scrollableArea .main-card-c {
+		width: 224px;
+		height:480px;
+		margin: 0 8px 0 24px;
+	}
+
+	.main-card-c-1 {
+		height: 232px;
+		width: 224px;
+		margin: 0 0 20px 0;
+	}
+
+	.main-card-c-2 {
+		height: 232px;
+		width: 224px;
+		margin: 0 0 6px 0;
+	}
+
+	.main-card-c-1 a.card-title{
+		width: 216px;
+		margin: 0 0 248px 0;
+		padding: 4px 4px;
+		font-size: 170%;
+	}
+
+	.main-card-c-2 a.card-title{
+		width: 216px;
+		padding: 4px 4px;
+		font-size: 170%;
+	}
+	
+	#content h1 {
+		font-size: 220%;
+	}
+}
+
+@media screen and (min-width:481px) and (max-width:1079px) {
+	#news {
+		width: 80%;
+		margin: 0 10%;
+		padding: 0;
+	}
+	.news-info p{
+		font-size: 180%;
+	}
+	
+	#cards {
+		height: 544px;
+	}
+
+	.fix-card-p {
+		height: 544px;
+		width: 512px;
+	}
+
+	.fix-card-c {
+		height: 480px;
+		width: 464px;
+		padding: 32px 24px;
+	}
+
+
+	.fix-card-c a.card-title{
+		width: 432px;
+		margin: 0 0 32px 0;
+		padding: 16px 16px;
+		font-size: 200%;
+	}
+
+	#miniScroller {
+		height: 480px;
+		padding: 32px 24px 32px 514px;
+	}
+
+	#miniScroller div.scrollableArea .main-card-c {
+		width: 224px;
+		height:480px;
+		margin: 0 8px 0 24px;
+	}
+
+	.main-card-c-1 {
+		height: 232px;
+		width: 224px;
+		margin: 0 0 20px 0;
+	}
+
+	.main-card-c-2 {
+		height: 232px;
+		width: 224px;
+		margin: 0 0 6px 0;
+	}
+
+	.main-card-c-1 a.card-title{
+		width: 216px;
+		margin: 0 0 248px 0;
+		padding: 4px 4px;
+		font-size: 160%;
+	}
+
+	.main-card-c-2 a.card-title{
+		width: 216px;
+		padding: 4px 4px;
+		font-size: 160%;
+	}
+}

@@ -115,12 +115,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="encryption.cpp" />
-    <ClCompile Include="laiter_encryption_test.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="encryption.h" />
-    <ClInclude Include="laiter_encryption_test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
